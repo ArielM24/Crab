@@ -11,7 +11,11 @@ import java.io.*;
 public class Principal extends Application {
 	private Stage stagePrincipal;
 	private Scene scenePrincipal;
-	private TabPane panePrincipal;
+	private TabPane panelBalanza;
+	private VBox panePrincipal;
+	private Menu mArchivo;
+	private MenuBar mbMenu;
+	private MenuItem miNuevo,miAbrir,miGuardar;
     @Override
 
     public void start(Stage primaryStage){
@@ -24,10 +28,17 @@ public class Principal extends Application {
     }
 
     private void initComp() {
-    	panePrincipal = new TabPane();
+    	panelBalanza = new TabPane();
+    	iniciaIconos();
+    	iniciaMenu();
+    	panePrincipal = new VBox(10, mbMenu, panelBalanza);
+    }
+
+    private void iniciaIconos() {
     	Tab t1 = new Tab("Crab");
-    	panePrincipal.getTabs().add(t1);
-    	panePrincipal.getTabs().get(0).setOnCloseRequest(e-> {e.consume();});
+
+    	panelBalanza.getTabs().add(t1);
+    	panelBalanza.getTabs().get(0).setOnCloseRequest(e-> {e.consume();});
     	Label lblInicial = new Label("CRAB");
     	VBox panelInicial = new VBox(10,lblInicial);
     	t1.setContent(panelInicial);
@@ -47,7 +58,21 @@ public class Principal extends Application {
 			panelInicial.setAlignment(Pos.CENTER);
     	}catch(Exception ex){
     		ex.printStackTrace();
-    	}
+    	}	
+    }
+
+    private void iniciaMenu() {
+    	miNuevo = new MenuItem("Nuevo");
+		miAbrir = new MenuItem("Abrir");
+		miGuardar = new MenuItem("Guardar");
+		//miNuevo.setOnAction(e->miNuevoClick());
+		//miAbrir.setOnAction(e->miAbrirClick());
+		//miGuardar.setOnAction(e->miGuardarClick());
+		mArchivo = new Menu("Archivo");
+		mArchivo.getItems().add(miNuevo);
+		mArchivo.getItems().add(miAbrir);
+		mArchivo.getItems().add(miGuardar);
+		mbMenu = new MenuBar(mArchivo);
     }
 
     public static void main(String args[]) {
