@@ -5,7 +5,7 @@ public class Cuenta {
 	private String descripcion;
 	private HashMap<String,Movimiento> movimientos;
 	public Cuenta(String nombre) {
-		this.nombre = nombre+"nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn";
+		this.nombre = nombre;
 		this.descripcion = " ifrji{rifoneqrfionq3oifn4oinfo2irnadasasasdas.\nsdnsd.";
 	}
 

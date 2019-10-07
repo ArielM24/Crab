@@ -6,17 +6,20 @@ import javafx.scene.layout.*;
 import javafx.geometry.*;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class NuevoMov {
 	private static Stage stage;
 	private static Scene scene;
 	private static GridPane pane;
 	private static ScrollPane spPane;
+	private static TextField tfNombre;
 	private static ArrayList<Cuenta> alCuentas;
 	private static Movimiento m;
 	private static Button btnAceptar, btnCancelar;
 	private static ArrayList<CheckBox> cuentas;
 	private static ArrayList<TextField> montos;
+	private static ArrayList<RadioButton[]> tipo;
 	public static Movimiento show(List<Cuenta> c){
 		stage = new Stage();
 		initComp(c);
@@ -28,8 +31,11 @@ public class NuevoMov {
 	}
 
 	private static void initComp(List<Cuenta> c){
+		tfNombre = new TextField();
 		cuentas = new ArrayList<CheckBox>();
 		montos = new ArrayList<TextField>();
+		tipo = new ArrayList<RadioButton[]>();
+		alCuentas = new ArrayList<Cuenta>(c);
 		pane = new GridPane();
 		pane.setPadding(new Insets(10));
 		spPane = new ScrollPane(pane);
@@ -38,28 +44,75 @@ public class NuevoMov {
 			CheckBox cb = new CheckBox(aux.getNombre());
 			cb.setSelected(false);
 			TextField tf = new TextField();
+			tf.setMaxWidth(100);
 			tf.setDisable(true);
 			cb.setOnAction(e->select(cb));
+			RadioButton rbA = new RadioButton("Abono");
+			RadioButton rbC = new RadioButton("Cargo");
+			ToggleGroup tg = new ToggleGroup();
+			rbA.setToggleGroup(tg);
+			rbC.setToggleGroup(tg);
+			rbA.setDisable(true);
+			rbC.setDisable(true);
+			rbC.setSelected(true);
+			RadioButton btns[] = {rbC,rbA};
 			cuentas.add(cb);
 			montos.add(tf);
+			tipo.add(btns);
 			pane.add(cb,0,i);
 			pane.add(tf,1,i);
+			pane.add(rbC,2,i);
+			pane.add(rbA,3,i);
 			i++;
 		}	
 		btnAceptar = new Button("Aceptar");
 		btnCancelar = new Button("Cancelar");
+		btnCancelar.setOnAction(e->{stage.close();});
+		btnAceptar.setOnAction(e->btnAceptarClick());
 		pane.setMargin(btnAceptar, new Insets(0,10,0,10));
 		pane.setMargin(btnCancelar, new Insets(0,10,0,10));
-		pane.add(btnAceptar,2,0);
-		pane.add(btnCancelar,3,0);
+		pane.add(new Label(" Nombre: "),4,0);
+		pane.add(tfNombre,5,0);
+		pane.add(btnAceptar,4,1);
+		pane.add(btnCancelar,5,1);
 	}
 
 	private static void select(CheckBox c){
 		int i = cuentas.indexOf(c);
 		if(cuentas.get(i).isSelected()){
 			montos.get(i).setDisable(false);
+			tipo.get(i)[0].setDisable(false);
+			tipo.get(i)[1].setDisable(false);
 		}else{
 			montos.get(i).setDisable(true);
+			tipo.get(i)[0].setDisable(true);
+			tipo.get(i)[1].setDisable(true);
 		}
+	}
+
+
+
+	private static void btnAceptarClick(){
+		HashMap<Cuenta, Operacion> hm = new HashMap<Cuenta, Operacion>();
+		int i = 0;
+		boolean s = false;
+		for(CheckBox cb: cuentas){
+			if(cb.isSelected()){
+				s = true;
+				Operacion op = new Operacion(tipo.get(i)[0].isSelected(),
+					Double.parseDouble(montos.get(i).getText()));
+				hm.put(alCuentas.get(i),op);
+			}
+			i++;
+		}
+		String nombre = tfNombre.getText().trim().replace(" ","");
+		if(nombre != null){
+			if(nombre.length() > 0){
+				if(s){
+					m = new Movimiento(nombre,hm);
+				}
+			}
+		}
+		stage.close();
 	}
 }
