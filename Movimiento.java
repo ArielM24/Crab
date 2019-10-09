@@ -18,4 +18,19 @@ public class Movimiento {
 		}
 		return str;
 	}
+
+	@Override
+	public boolean equals(Object obj){
+		if(obj instanceof Movimiento){
+			Movimiento aux = (Movimiento)obj;
+			return aux.id.equals(this.id);
+		}else return false;
+	}
+
+	public String getId(){
+		return id;
+	}
+	public ArrayList<Operacion> getOperaciones(){
+		return operaciones;
+	}
 }

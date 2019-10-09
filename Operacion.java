@@ -17,6 +17,10 @@ public class Operacion {
 		return cantidad;
 	}
 
+	public Cuenta getCuenta(){
+		return cuenta;
+	}
+
 	@Override
 	public boolean equals(Object obj){
 		if(obj instanceof Operacion){

@@ -16,6 +16,7 @@ public class TabBalanza extends Tab {
 	private int x = 0,y = 0;
 	private Label lblAcredor,lblDeudor;
 	private ArrayList<T> tes;
+	private ArrayList<Cuenta> alCuentas;
 
 	public TabBalanza(String nombre) {
 		super(nombre);
@@ -65,6 +66,7 @@ public class TabBalanza extends Tab {
 		bpCuentas.setBottom(spSaldos);
 		bpCuentas.setAlignment(spSaldos,Pos.TOP_CENTER);
 		gpSaldos.setPadding(new Insets(10));	
+		alCuentas = new ArrayList<>();
 	}
 
 	private void agregaBtnCuenta(){
@@ -155,13 +157,34 @@ public class TabBalanza extends Tab {
 	}
 
 	private void actualizaMov(Movimiento m){
-		
+		ArrayList<Operacion> op = m.getOperaciones();
+		int i = 0;
+		for(Operacion o: op){
+			Cuenta aux = o.getCuenta();
+			if(!alCuentas.contains(aux)){
+				T t = new T(aux);
+				agregaT(t);
+				alCuentas.add(aux);
+				i = tes.indexOf(t);
+			}
+			tes.get(i).actualiza(o,m.getId());
+		}
+	}
+
+	private void agregaT(T t){
+		gpCuentas.add(t, x, y);
+		tes.add(t);
+		x++;
+		if(x > 3){
+			x = 0;
+			y++;
+		}
 	}
 
 	private void btnEditaCuentaClick(){
 		Cuenta c = lvCuentas.getSelectionModel().getSelectedItem();
 		if(c!=null){
-			gpCuentas.add(new T(c.getNombre(), c), x, y);
+			gpCuentas.add(new T(c), x, y);
 			x++;
 			if(x > 3){
 				x = 0;

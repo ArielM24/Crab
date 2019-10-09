@@ -26,6 +26,7 @@ public class NuevoMov {
 		scene = new Scene(spPane,500,400);
 		stage.setScene(scene);
 		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.setTitle("Nuevo movimiento");
 		stage.showAndWait();
 		return m;
 	}
@@ -96,24 +97,43 @@ public class NuevoMov {
 	private static void btnAceptarClick(){
 		ArrayList <Operacion> al = new ArrayList<Operacion>();
 		int i = 0;
-		boolean s = false;
+		boolean s = false, err = false;
+		double cantidad;
 		for(CheckBox cb: cuentas){
 			if(cb.isSelected()){
 				s = true;
-				Operacion op = new Operacion(tipo.get(i)[0].isSelected(),
-					Double.parseDouble(montos.get(i).getText()),alCuentas.get(i));
+				try{
+					cantidad = Double.parseDouble(montos.get(i).getText());
+					cantidad = Double.parseDouble(String.format("%.2f",cantidad));
+				}catch(Exception ex){
+					MessageBox.show("Error", "Formato de cantidad incorrecto");
+					err = true;
+					break;
+				}
+				if(cantidad <= 0){
+					MessageBox.show("Error", "No se aceptan cantidades negativas o 0");
+					err = true;
+					break;
+				}
+				Operacion op = new Operacion(tipo.get(i)[0].isSelected(),cantidad,alCuentas.get(i));
 				al.add(op);
 			}
 			i++;
 		}
-		String nombre = tfNombre.getText().trim().replace(" ","");
-		if(nombre != null){
-			if(nombre.length() > 0){
-				if(s){
-					m = new Movimiento(nombre,al);
+		if(!err){
+			String nombre = tfNombre.getText().trim().replace(" ","").replace("\t","");
+			if(nombre != null){
+				if(nombre.length() > 0){
+					if(s){
+						m = new Movimiento(nombre,al);
+						stage.close();
+					}
+				}else{
+					MessageBox.show("Error","Nombre muy corto");
 				}
+			}else{
+				MessageBox.show("Error", "Los movimientos necesitan un nombre");
 			}
 		}
-		stage.close();
 	}
 }

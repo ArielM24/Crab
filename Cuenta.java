@@ -21,4 +21,12 @@ public class Cuenta {
 	public String toString(){
 		return nombre;
 	}
+
+	@Override
+	public boolean equals(Object obj){
+		if(obj instanceof Cuenta){
+			Cuenta a = (Cuenta)obj;
+			return a.getNombre().equals(this.nombre);
+		}else return false;
+	}
 }
