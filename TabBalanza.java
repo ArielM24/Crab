@@ -86,10 +86,12 @@ public class TabBalanza extends Tab {
 	private void agregaBtnMov(){
 		btnEditaMov = new Button("Editar");
 		btnEditaMov.setDisable(true);
+		//btnEditaMov.setOnAction(e->btnEditaMovClick());
 		btnNuevoMov = new Button("Nuevo");
 		btnNuevoMov.setOnAction(e->btnNuevoMovClick());
 		btnBorrarMov = new Button("Borrar");
 		btnBorrarMov.setDisable(true);
+		btnBorrarMov.setOnAction(e->btnBorrarMovClick());
 		HBox hbBotones = new HBox(10,btnEditaMov,btnBorrarMov,btnNuevoMov);
 		hbBotones.setPadding(new Insets(10));
 		vbMovimientos.getChildren().add(hbBotones);
@@ -101,7 +103,7 @@ public class TabBalanza extends Tab {
 		if(m!=null){
 			if(!lvMovimientos.getItems().contains(m)){
 				lvMovimientos.getItems().add(m);
-				actualizaTes();
+				actualizaMov(m);
 			}else{
 				MessageBox.show("Error", "Los nombres de los movimientos\nno se pueden repetir");
 			}
@@ -167,13 +169,13 @@ public class TabBalanza extends Tab {
 		int i = 0;
 		for(Operacion o: op){
 			Cuenta aux = o.getCuenta();
+			T t = new T(aux);
 			if(!alCuentas.contains(aux)){
-				T t = new T(aux);
 				agregaT(t);
 				alCuentas.add(aux);
-				i = tes.indexOf(t);
 			}
-			tes.get(i).actualiza(o,m.getId());
+			i = tes.indexOf(t);
+			tes.get(i).actualiza(o);
 		}
 	}
 
@@ -207,6 +209,21 @@ public class TabBalanza extends Tab {
 		if(c!=null){
 			if(ConfirmationBox.show("Borrar","¿Borrar cuenta?","Si","No")){
 				lvCuentas.getItems().remove(c);
+			}
+		}
+	}
+
+	private void btnBorrarMovClick(){
+		Movimiento m = lvMovimientos.getSelectionModel().getSelectedItem();
+		if(m!=null){
+			if(ConfirmationBox.show("Borrar","¿Deshacer movimiento?","Si","No")){
+				lvMovimientos.getItems().remove(m);
+				tes.clear();
+				gpCuentas.getChildren().clear();
+				alCuentas.clear();
+				x = 0;
+				y = 0;
+				actualizaTes();
 			}
 		}
 	}

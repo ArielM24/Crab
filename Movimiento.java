@@ -5,7 +5,7 @@ public class Movimiento {
 	private ArrayList<Operacion> operaciones;
 	public Movimiento(String id,ArrayList<Operacion> operaciones){
 		this.id = id;
-		this.operaciones = operaciones;
+		this.operaciones = new ArrayList<Operacion>(operaciones);
 	}
 	@Override
 	public String toString(){

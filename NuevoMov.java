@@ -23,7 +23,7 @@ public class NuevoMov {
 	public static Movimiento show(List<Cuenta> c){
 		stage = new Stage();
 		initComp(c);
-		scene = new Scene(spPane,500,400);
+		scene = new Scene(spPane,570,400);
 		stage.setScene(scene);
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.setTitle("Nuevo movimiento");
@@ -62,6 +62,7 @@ public class NuevoMov {
 			montos.add(tf);
 			tipo.add(btns);
 			pane.add(cb,0,i);
+			pane.setMargin(cb,new Insets(5));
 			pane.add(tf,1,i);
 			pane.add(rbC,2,i);
 			pane.add(rbA,3,i);
@@ -71,12 +72,13 @@ public class NuevoMov {
 		btnCancelar = new Button("Cancelar");
 		btnCancelar.setOnAction(e->{stage.close();});
 		btnAceptar.setOnAction(e->btnAceptarClick());
-		pane.setMargin(btnAceptar, new Insets(0,10,0,10));
-		pane.setMargin(btnCancelar, new Insets(0,10,0,10));
 		pane.add(new Label(" Nombre: "),4,0);
 		pane.add(tfNombre,5,0);
 		pane.add(btnAceptar,4,1);
 		pane.add(btnCancelar,5,1);
+		pane.setMargin(btnAceptar, new Insets(5));
+		pane.setMargin(btnCancelar, new Insets(5));
+		pane.setMargin(tfNombre, new Insets(5));
 	}
 
 	private static void select(CheckBox c){
@@ -99,8 +101,9 @@ public class NuevoMov {
 		int i = 0;
 		boolean s = false, err = false;
 		double cantidad;
+		String nombre = tfNombre.getText().trim().replace(" ","").replace("\t","");
 		for(CheckBox cb: cuentas){
-			if(cb.isSelected()){
+			if(cb.isSelected()&&!cb.isDisable()){
 				s = true;
 				try{
 					cantidad = Double.parseDouble(montos.get(i).getText());
@@ -115,13 +118,12 @@ public class NuevoMov {
 					err = true;
 					break;
 				}
-				Operacion op = new Operacion(tipo.get(i)[0].isSelected(),cantidad,alCuentas.get(i));
+				Operacion op = new Operacion(tipo.get(i)[0].isSelected(),cantidad,alCuentas.get(i),nombre);
 				al.add(op);
 			}
 			i++;
 		}
 		if(!err){
-			String nombre = tfNombre.getText().trim().replace(" ","").replace("\t","");
 			if(nombre != null){
 				if(nombre.length() > 0){
 					if(s){

@@ -3,10 +3,11 @@ public class Operacion {
 	private boolean tipo; //true -> cargo, false -> abono
 	private double cantidad;
 	private Cuenta cuenta;
-	public Operacion(boolean tipo, double cantidad, Cuenta cuenta){
+	public Operacion(boolean tipo, double cantidad, Cuenta cuenta,String id){
 		this.tipo = tipo;
 		this.cantidad = cantidad;
 		this.cuenta = cuenta;
+		this.id = id;
 	}
 
 	public boolean getTipo(){
@@ -37,5 +38,8 @@ public class Operacion {
 		}else{
 			return op+"Abono: $"+cantidad;
 		}
+	}
+	public String getId(){
+		return id;
 	}
 }
