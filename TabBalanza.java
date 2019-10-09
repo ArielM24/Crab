@@ -71,6 +71,7 @@ public class TabBalanza extends Tab {
 
 	private void agregaBtnCuenta(){
 		btnEditaCuenta = new Button("Editar");
+		btnEditaCuenta.setOnAction(e->btnEditaCuentaClick());
 		btnEditaCuenta.setDisable(true);
 		btnEditaCuenta.setOnAction(e->btnEditaCuentaClick());
 		btnBorraCuenta = new Button("Borrar");
@@ -97,8 +98,12 @@ public class TabBalanza extends Tab {
 	private void btnNuevoMovClick(){
 		Movimiento m = NuevoMov.show(lvCuentas.getItems());
 		if(m!=null){
-			lvMovimientos.getItems().add(m);
-			actualizaTes();
+			if(!lvMovimientos.getItems().contains(m)){
+				lvMovimientos.getItems().add(m);
+				actualizaTes();
+			}else{
+				MessageBox.show("Error", "Los nombres de los movimientos\nno se pueden repetir");
+			}
 		}
 	}
 
@@ -182,14 +187,10 @@ public class TabBalanza extends Tab {
 	}
 
 	private void btnEditaCuentaClick(){
-		Cuenta c = lvCuentas.getSelectionModel().getSelectedItem();
-		if(c!=null){
-			gpCuentas.add(new T(c), x, y);
-			x++;
-			if(x > 3){
-				x = 0;
-				y++;
-			}
-		}
+		
+	}
+
+	private void btnCreaCuentaClick(){
+
 	}
 }
