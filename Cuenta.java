@@ -9,6 +9,11 @@ public class Cuenta {
 		this.descripcion = " ifrji{rifoneqrfionq3oifn4oinfo2irnadasasasdas.\nsdnsd.";
 	}
 
+	public Cuenta(String nombre, String descripcion){
+		this.nombre = nombre;
+		this.descripcion = descripcion;
+	}
+
 	public String getNombre(){
 		return nombre;
 	}

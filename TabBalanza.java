@@ -73,10 +73,11 @@ public class TabBalanza extends Tab {
 		btnEditaCuenta = new Button("Editar");
 		btnEditaCuenta.setOnAction(e->btnEditaCuentaClick());
 		btnEditaCuenta.setDisable(true);
-		btnEditaCuenta.setOnAction(e->btnEditaCuentaClick());
 		btnBorraCuenta = new Button("Borrar");
 		btnBorraCuenta.setDisable(true);
+		btnBorraCuenta.setOnAction(e->btnBorraCuentaClick());
 		btnCreaCuenta = new Button("Nueva");
+		btnCreaCuenta.setOnAction(e->btnCreaCuentaClick());
 		HBox hbBotones = new HBox(10, btnEditaCuenta, btnBorraCuenta, btnCreaCuenta);
 		hbBotones.setPadding(new Insets(10));
 		vbCuentas.getChildren().add(hbBotones);
@@ -187,10 +188,26 @@ public class TabBalanza extends Tab {
 	}
 
 	private void btnEditaCuentaClick(){
-		
+		Cuenta c1 = lvCuentas.getSelectionModel().getSelectedItem();
+		Cuenta c = CuentaNueva.show(c1);
+		if(c!=null){
+			lvCuentas.getItems().remove(c1);
+			lvCuentas.getItems().add(c);
+		}
 	}
 
 	private void btnCreaCuentaClick(){
-
+		Cuenta c = CuentaNueva.show();
+		if(c!= null){
+			lvCuentas.getItems().add(c);
+		}
+	}
+	private void btnBorraCuentaClick(){
+		Cuenta c = lvCuentas.getSelectionModel().getSelectedItem();
+		if(c!=null){
+			if(ConfirmationBox.show("Borrar","¿Borrar cuenta?","Si","No")){
+				lvCuentas.getItems().remove(c);
+			}
+		}
 	}
 }
