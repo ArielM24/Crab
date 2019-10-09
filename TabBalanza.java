@@ -2,6 +2,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.geometry.*;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 public class TabBalanza extends Tab {
 	private BorderPane bpCuentas;
@@ -14,6 +15,7 @@ public class TabBalanza extends Tab {
 	private GridPane gpCuentas,gpSaldos;
 	private int x = 0,y = 0;
 	private Label lblAcredor,lblDeudor;
+	private ArrayList<T> tes;
 
 	public TabBalanza(String nombre) {
 		super(nombre);
@@ -22,6 +24,7 @@ public class TabBalanza extends Tab {
 	}
 
 	private void initComp(){
+		tes = new ArrayList<T>();
 		gpCuentas = new GridPane();
 		spTes = new ScrollPane(gpCuentas);
 		spTes.setMinHeight(500);
@@ -43,6 +46,10 @@ public class TabBalanza extends Tab {
 		setContent(bpCuentas);
 		agregaMovimientos();
 		agregaBtnCuenta();
+		initComp2();
+	}
+
+	private void initComp2(){
 		lblAcredor = new Label("Saldo Duedor\n$0.00");
 		lblDeudor = new Label(" Saldo Acredor\n $0.00");
 		btnVerBalanza = new Button("Ver balanza de comprobación");
@@ -57,7 +64,7 @@ public class TabBalanza extends Tab {
 		agregaBtnMov();
 		bpCuentas.setBottom(spSaldos);
 		bpCuentas.setAlignment(spSaldos,Pos.TOP_CENTER);
-		gpSaldos.setPadding(new Insets(10));
+		gpSaldos.setPadding(new Insets(10));	
 	}
 
 	private void agregaBtnCuenta(){
@@ -86,7 +93,11 @@ public class TabBalanza extends Tab {
 	}
 
 	private void btnNuevoMovClick(){
-		NuevoMov.show(lvCuentas.getItems());
+		Movimiento m = NuevoMov.show(lvCuentas.getItems());
+		if(m!=null){
+			lvMovimientos.getItems().add(m);
+			actualizaTes();
+		}
 	}
 
 	private void agregaMovimientos(){
@@ -94,7 +105,7 @@ public class TabBalanza extends Tab {
 		lvMovimientos.setMaxHeight(300);
 		lvMovimientos.getSelectionModel().selectedItemProperty().addListener((obj,oldv,newv)->{
 			if(newv != null){
-				taMovimientos.setText(newv.toString());
+				taMovimientos.setText(newv.getDescripcion());
 				btnBorrarMov.setDisable(false);
 				btnEditaMov.setDisable(false);
 			}else{
@@ -135,6 +146,16 @@ public class TabBalanza extends Tab {
 		vbCuentas.getChildren().add(new Label("Cuentas"));
 		vbCuentas.getChildren().add(lvCuentas);
 		vbCuentas.getChildren().add(taCuentas);
+	}
+
+	private void actualizaTes(){
+		for(Movimiento m: lvMovimientos.getItems()){
+			actualizaMov(m);
+		}
+	}
+
+	private void actualizaMov(Movimiento m){
+		
 	}
 
 	private void btnEditaCuentaClick(){

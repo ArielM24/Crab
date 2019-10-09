@@ -56,6 +56,7 @@ public class NuevoMov {
 			rbC.setDisable(true);
 			rbC.setSelected(true);
 			RadioButton btns[] = {rbC,rbA};
+			alCuentas.add(aux);
 			cuentas.add(cb);
 			montos.add(tf);
 			tipo.add(btns);
@@ -93,15 +94,15 @@ public class NuevoMov {
 
 
 	private static void btnAceptarClick(){
-		HashMap<Cuenta, Operacion> hm = new HashMap<Cuenta, Operacion>();
+		ArrayList <Operacion> al = new ArrayList<Operacion>();
 		int i = 0;
 		boolean s = false;
 		for(CheckBox cb: cuentas){
 			if(cb.isSelected()){
 				s = true;
 				Operacion op = new Operacion(tipo.get(i)[0].isSelected(),
-					Double.parseDouble(montos.get(i).getText()));
-				hm.put(alCuentas.get(i),op);
+					Double.parseDouble(montos.get(i).getText()),alCuentas.get(i));
+				al.add(op);
 			}
 			i++;
 		}
@@ -109,7 +110,7 @@ public class NuevoMov {
 		if(nombre != null){
 			if(nombre.length() > 0){
 				if(s){
-					m = new Movimiento(nombre,hm);
+					m = new Movimiento(nombre,al);
 				}
 			}
 		}
