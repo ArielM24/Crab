@@ -65,7 +65,7 @@ public class TabBalanza extends Tab {
 		agregaBtnMov();
 		bpCuentas.setBottom(spSaldos);
 		bpCuentas.setAlignment(spSaldos,Pos.TOP_CENTER);
-		gpSaldos.setPadding(new Insets(10));	
+		gpSaldos.setPadding(new Insets(10));
 		alCuentas = new ArrayList<>();
 	}
 

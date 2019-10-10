@@ -14,8 +14,11 @@ public class CuentaNueva{
 	private static TextField tfNombre;
 	private static Label lblNombre, lblDescripcion;
 	private static Button btnAceptar, btnCancelar;
+	private static boolean editado;
 
 	public static Cuenta show(){
+		c = null;
+		editado = false;
 		stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
 		initComp();
@@ -23,10 +26,15 @@ public class CuentaNueva{
 		stage.setScene(scene);
 		stage.setTitle("Nueva cuenta");
 		stage.showAndWait();
+		if(!editado){
+			c = null;
+		}
 		return c;
 	}
 
 	public static Cuenta show(Cuenta editar){
+		c = null;
+		editado = false;
 		stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
 		initComp();
@@ -36,6 +44,9 @@ public class CuentaNueva{
 		stage.setScene(scene);
 		stage.setTitle("Nueva cuenta");
 		stage.showAndWait();
+		if(!editado){
+			c = null;
+		}
 		return c;
 	}
 
@@ -59,6 +70,7 @@ public class CuentaNueva{
 	}
 
 	private static void btnCancelarClick(){
+		editado = false;
 		stage.close();
 	}
 
@@ -69,8 +81,10 @@ public class CuentaNueva{
 				String descripcion = taDescripcion.getText().trim();
 				if(descripcion!=null){
 					c = new Cuenta(nombre,descripcion);
+					editado = true;
 				}else{
 					c = new Cuenta(nombre);
+					editado = true;
 				}
 				stage.close();
 			}else{
