@@ -22,6 +22,10 @@ public class Operacion {
 		return cuenta;
 	}
 
+	public void setCuenta(Cuenta c){
+		this.cuenta = c;
+	}
+
 	@Override
 	public boolean equals(Object obj){
 		if(obj instanceof Operacion){

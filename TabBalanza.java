@@ -191,10 +191,20 @@ public class TabBalanza extends Tab {
 
 	private void btnEditaCuentaClick(){
 		Cuenta c1 = lvCuentas.getSelectionModel().getSelectedItem();
-		Cuenta c = CuentaNueva.show(c1);
-		if(c!=null){
+		Cuenta c2 = CuentaNueva.show(c1);
+		if(c2!=null){
 			lvCuentas.getItems().remove(c1);
-			lvCuentas.getItems().add(c);
+			lvCuentas.getItems().add(c2);
+			for(T t: tes){
+				if(t.getCuenta().equals(c1)){
+					t.setCuenta(c2);
+				}
+			}
+			for(Movimiento m: lvMovimientos.getItems()){
+				if(m.contieneCuenta(c1)){
+					m.cambiaC(c1,c2);
+				}
+			}
 		}
 	}
 
@@ -204,11 +214,36 @@ public class TabBalanza extends Tab {
 			lvCuentas.getItems().add(c);
 		}
 	}
+	private void borraCuentaM(Cuenta c){
+		lvCuentas.getItems().remove(c);
+		for(Movimiento m: lvMovimientos.getItems()){
+			if(m.contieneCuenta(c)){
+				m.borraC(c);
+			}
+		}
+		x = 0;
+		y = 0;
+		gpCuentas.getChildren().clear();
+		tes.clear();
+		alCuentas.clear();
+		actualizaTes();
+	}
 	private void btnBorraCuentaClick(){
 		Cuenta c = lvCuentas.getSelectionModel().getSelectedItem();
 		if(c!=null){
 			if(ConfirmationBox.show("Borrar","¿Borrar cuenta?","Si","No")){
 				lvCuentas.getItems().remove(c);
+				for(Movimiento m: lvMovimientos.getItems()){
+					if(m.contieneCuenta(c)){
+						m.borraC(c);
+					}
+				}
+				x = 0;
+				y = 0;
+				gpCuentas.getChildren().clear();
+				tes.clear();
+				alCuentas.clear();
+				actualizaTes();
 			}
 		}
 	}
@@ -224,6 +259,7 @@ public class TabBalanza extends Tab {
 				x = 0;
 				y = 0;
 				actualizaTes();
+				taMovimientos.setText("");
 			}
 		}
 	}

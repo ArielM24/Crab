@@ -90,4 +90,16 @@ public class T extends TitledPane{
 	public boolean esVacia(){
 		return lvAcredor.getItems().isEmpty() && lvDeudor.getItems().isEmpty();
 	}
+	public Cuenta getCuenta(){
+		return cuenta;
+	}
+	public void setCuenta(Cuenta c){
+		this.cuenta = c;
+		setText(c.getNombre());
+		for(Operacion op: operaciones){
+			if(op.getCuenta().equals(c)){
+				op.setCuenta(c);
+			}
+		}
+	}
 }
