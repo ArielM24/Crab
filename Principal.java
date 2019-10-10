@@ -79,7 +79,7 @@ public class Principal extends Application {
     }
 
     private void miNuevoClick(){
-    	TabBalanza tb = new TabBalanza("Nombre");
+    	TabBalanza tb = new TabBalanza("Cuentas*");
     	panelBalanza.getTabs().add(tb);
     	panelBalanza.getSelectionModel().select(tb);
     }
