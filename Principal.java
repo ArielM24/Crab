@@ -5,8 +5,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.geometry.*;
 import javafx.scene.image.*;
+import javafx.scene.text.*;
+import javafx.scene.effect.*;
+import javafx.scene.paint.*;
 import java.io.*;
-
+import javafx.event.*;
 
 public class Principal extends Application {
 	private Stage stagePrincipal;
@@ -17,14 +20,15 @@ public class Principal extends Application {
 	private MenuBar mbMenu;
 	private MenuItem miNuevo,miAbrir,miGuardar;
 	private FileChooser fc;
-    @Override
 
+    @Override
     public void start(Stage primaryStage){
     	stagePrincipal = primaryStage;
     	initComp();
     	scenePrincipal = new Scene(panePrincipal, 1250,700);
     	stagePrincipal.setScene(scenePrincipal);
     	stagePrincipal.setTitle("Crab");
+        stagePrincipal.setOnCloseRequest(e->cerrar(e));
     	stagePrincipal.show();
     }
 
@@ -36,23 +40,33 @@ public class Principal extends Application {
     	iniciaIconos();
     	iniciaMenu();
     	panePrincipal = new VBox(10, mbMenu, panelBalanza);
+        //panePrincipal.setStyle("-fx-background-color:POWDERBLUE");
     }
 
     private void iniciaIconos() {
     	Tab t1 = new Tab("Crab");
     	panelBalanza.getTabs().add(t1);
     	panelBalanza.getTabs().get(0).setOnCloseRequest(e-> {e.consume();});
-    	Label lblInicial = new Label("CRAB");
-    	VBox panelInicial = new VBox(10,lblInicial);
+    	Text txtInicial = new Text("CRAB");
+        txtInicial.setCache(true);
+        txtInicial.setFill(Color.ORANGE);
+        txtInicial.setFont(Font.font(null, FontWeight.BOLD, 30));
+        Reflection r = new Reflection();
+        r.setFraction(0.7f);
+        txtInicial.setEffect(r);
+    	VBox panelInicial = new VBox(10,txtInicial);
     	t1.setContent(panelInicial);
+        panelInicial.setStyle("-fx-background-color:#fff99e");
+        t1.setStyle("-fx-background-color:POWDERBLUE");
+        //panelBalanza.setStyle("-fx-background-color:POWDERBLUE");
     	try{
-			InputStream in = getClass().getResourceAsStream("crab.png"); 
+			InputStream in = getClass().getResourceAsStream("Crab.png"); 
 			stagePrincipal.getIcons().add(new Image(in));
 		}catch(Exception ex){
 			ex.printStackTrace();
 		}
     	try{
-    		InputStream is = getClass().getResourceAsStream("crab.png");
+    		InputStream is = getClass().getResourceAsStream("Crab.png");
     		Image img = new Image(is);
     		ImageView iv = new ImageView(img);
     		iv.setFitWidth(500);
@@ -93,6 +107,7 @@ public class Principal extends Application {
             try{
                 ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(archivo));
                 os.writeObject(b);
+                tb.setText(archivo.getName());
             }catch(Exception ex){
                 ex.printStackTrace();
             }
@@ -109,12 +124,19 @@ public class Principal extends Application {
                 miNuevoClick();
                 TabBalanza tb = (TabBalanza)panelBalanza.getSelectionModel().getSelectedItem();
                 tb.cargaBalanza(b);
+                tb.setText(archivo.getName());
             }catch(Exception ex){
                 ex.printStackTrace();
             }
         }
     }
 
+    
+    public void cerrar(Event e){
+        if(!ConfirmationBox.show("Cerrar","¿Salir?\n(El programa no detecta si se han modificado los\narchivos abiertos).","Si","No")){
+            e.consume();
+        }
+    }
     public static void main(String args[]) {
     	launch();
     }

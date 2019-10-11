@@ -31,6 +31,7 @@ public class MessageBox{
 		pane.setAlignment(Pos.CENTER);
 		pane.setPadding(new Insets(5));
 		pane.setMinWidth(250);
+		pane.setMargin(lblmsg, new Insets(5));
 		Scene scene = new Scene(pane);
 		stage.setScene(scene);
 		stage.setResizable(true);

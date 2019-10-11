@@ -43,6 +43,7 @@ public class ConfirmationBox{
 		VBox pane = new VBox(20);
 		pane.getChildren().addAll(lbl,panebtn);
 		pane.setAlignment(Pos.CENTER);
+		pane.setMargin(lbl, new Insets(5));
 		Scene scene = new Scene(pane);
 		stage.setScene(scene);
 		stage.showAndWait();

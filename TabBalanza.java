@@ -3,6 +3,7 @@ import javafx.scene.layout.*;
 import javafx.geometry.*;
 import java.util.HashMap;
 import java.util.ArrayList;
+import javafx.event.*;
 
 public class TabBalanza extends Tab {
 	private BorderPane bpCuentas;
@@ -23,7 +24,13 @@ public class TabBalanza extends Tab {
 	public TabBalanza(String nombre) {
 		super(nombre);
 		initComp();
-		setOnCloseRequest(e->{e.consume();});
+		setOnCloseRequest(e->cerrar(e));
+	}
+
+	private void cerrar(Event ev){
+		if(!ConfirmationBox.show("Cerrar","¿Cerrar archivo?","Si","No")){
+			ev.consume();
+		}
 	}
 
 	private void initComp(){
