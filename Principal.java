@@ -69,8 +69,8 @@ public class Principal extends Application {
 		miAbrir = new MenuItem("Abrir");
 		miGuardar = new MenuItem("Guardar");
 		miNuevo.setOnAction(e->miNuevoClick());
-		//miAbrir.setOnAction(e->miAbrirClick());
-		//miGuardar.setOnAction(e->miGuardarClick());
+		miAbrir.setOnAction(e->miAbrirClick());
+		miGuardar.setOnAction(e->miGuardarClick());
 		mArchivo = new Menu("Archivo");
 		mArchivo.getItems().add(miNuevo);
 		mArchivo.getItems().add(miAbrir);
@@ -82,6 +82,37 @@ public class Principal extends Application {
     	TabBalanza tb = new TabBalanza("Cuentas*");
     	panelBalanza.getTabs().add(tb);
     	panelBalanza.getSelectionModel().select(tb);
+    }
+
+    private void miGuardarClick(){
+        fc.setTitle("Guardar archivo");
+        File archivo = fc.showSaveDialog(stagePrincipal);
+        if(archivo != null){
+            TabBalanza tb = (TabBalanza)panelBalanza.getSelectionModel().getSelectedItem();
+            Balanza b = tb.getBalanza();
+            try{
+                ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(archivo));
+                os.writeObject(b);
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    private void miAbrirClick(){
+        fc.setTitle("Abrir archivo");
+        File archivo = fc.showOpenDialog(stagePrincipal);
+        if(archivo!=null){
+            try{
+                ObjectInputStream is = new ObjectInputStream(new FileInputStream(archivo));
+                Balanza b = (Balanza)is.readObject();
+                miNuevoClick();
+                TabBalanza tb = (TabBalanza)panelBalanza.getSelectionModel().getSelectedItem();
+                tb.cargaBalanza(b);
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+        }
     }
 
     public static void main(String args[]) {

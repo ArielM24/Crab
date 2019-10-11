@@ -2,13 +2,15 @@ import java.util.ArrayList;
 import java.io.Serializable;
 
 public class Balanza implements Serializable{
-	private Long serialVersionUID = 42L;
+	private static final long serialVersionUID = 6529685098267757690L;
 	private String nombre;
 	private ArrayList<TSerializable> datos;
+	private ArrayList<Movimiento> movimientos;
 	private double saldoAcreedor,saldoDeudor;
-	public Balanza(String nombre,ArrayList<TSerializable> datos){
+	public Balanza(String nombre,ArrayList<TSerializable> datos, ArrayList<Movimiento> movimientos){
 		this.nombre = nombre;
 		this.datos = new ArrayList<TSerializable>(datos);
+		this.movimientos = new ArrayList<Movimiento>(movimientos);
 		saldoDeudor = 0.0;
 		saldoAcreedor = 0.0;
 	}
@@ -70,5 +72,7 @@ public class Balanza implements Serializable{
 		}
 		return saldos;
 	}
-
+	public ArrayList<Movimiento> getMovimientos(){
+		return movimientos;
+	}
 }	

@@ -18,7 +18,7 @@ public class TabBalanza extends Tab {
 	private ArrayList<T> tes;
 	private ArrayList<Cuenta> alCuentas;
 	private double saldoAcreedor = 0.0,saldoDeudor = 0.0;
-
+	private Balanza b;
 
 	public TabBalanza(String nombre) {
 		super(nombre);
@@ -320,16 +320,28 @@ public class TabBalanza extends Tab {
 		}
 		return saldos;
 	}
-	private void btnVerBalanzaClick(){
+	public void generaBalanza(){
 		ArrayList<TSerializable> ts = new ArrayList<TSerializable>();
 		for(T t:tes){
 			TSerializable taux = new TSerializable(t.getCuenta(),t.getMovDeudor(),t.getMovAcreedor());
 			ts.add(taux);
 		}
-		Balanza b = new Balanza("Balanza de comprobacion",ts);
+		b = new Balanza("Balanza de comprobacion",ts,new ArrayList<Movimiento>(lvMovimientos.getItems()));
 		double saldos[] = calculaSaldos();
 		b.setSaldoDeudor(saldos[0]);
 		b.setSaldoAcreedor(saldos[1]);
+	}
+	private void btnVerBalanzaClick(){
+		generaBalanza();
 		MuestraBalanza.show(b);
+	}
+	public Balanza getBalanza(){
+		generaBalanza();
+		return b;
+	}
+	public void cargaBalanza(Balanza bal){
+		lvMovimientos.getItems().clear();
+		lvMovimientos.getItems().addAll(bal.getMovimientos());
+		actualizaTes();
 	}
 }

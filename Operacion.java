@@ -1,4 +1,6 @@
-public class Operacion {
+import java.io.*;
+public class Operacion implements Serializable{
+	private static final long serialVersionUID = 6529685098267757690L;
 	private String id;
 	private boolean tipo; //true -> cargo, false -> abono
 	private double cantidad;

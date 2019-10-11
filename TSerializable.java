@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.io.*;
 
 public class TSerializable implements Serializable{
-	private Long serialVersionUID = 42L;
+	private static final long serialVersionUID = 6529685098267757690L;
 	private Cuenta cuenta;
 	private double movAcreedor, movDeudor;
 

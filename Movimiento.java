@@ -1,6 +1,8 @@
 import java.util.ArrayList;
+import java.io.*;
 
-public class Movimiento {
+public class Movimiento implements Serializable{
+	private static final long serialVersionUID = 6529685098267757690L;
 	private String id;
 	private ArrayList<Operacion> operaciones;
 	public Movimiento(String id,ArrayList<Operacion> operaciones){
