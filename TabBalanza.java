@@ -14,9 +14,11 @@ public class TabBalanza extends Tab {
 	private Button btnEditaCuenta,btnBorraCuenta,btnCreaCuenta,btnEditaMov,btnBorrarMov,btnNuevoMov,btnVerBalanza;
 	private GridPane gpCuentas,gpSaldos;
 	private int x = 0,y = 0;
-	private Label lblAcredor,lblDeudor;
+	private Label lblAcreedor,lblDeudor,lblBalanceado;
 	private ArrayList<T> tes;
 	private ArrayList<Cuenta> alCuentas;
+	private double saldoAcreedor = 0.0,saldoDeudor = 0.0;
+
 
 	public TabBalanza(String nombre) {
 		super(nombre);
@@ -51,13 +53,15 @@ public class TabBalanza extends Tab {
 	}
 
 	private void initComp2(){
-		lblAcredor = new Label("Saldo Duedor\n$0.00");
-		lblDeudor = new Label(" Saldo Acredor\n $0.00");
+		lblAcreedor = new Label("Saldo Duedor\n$0.00");
+		lblDeudor = new Label(" Saldo Acreedor\n $0.00");
+		lblBalanceado = new Label("Balanceado: Si");
 		btnVerBalanza = new Button("Ver balanza de comprobación");
 		gpSaldos = new GridPane();
 		gpSaldos.add(lblDeudor,0,0);
-		gpSaldos.add(lblAcredor,1,0);
-		gpSaldos.add(btnVerBalanza,0,1);
+		gpSaldos.add(lblAcreedor,1,0);
+		gpSaldos.add(lblBalanceado,0,1);
+		gpSaldos.add(btnVerBalanza,0,2);
 		gpSaldos.setMargin(btnVerBalanza, new Insets(10,0,10,0));
 		spSaldos = new ScrollPane(gpSaldos);
 		spSaldos.setMaxWidth(450);
@@ -104,6 +108,7 @@ public class TabBalanza extends Tab {
 			if(!lvMovimientos.getItems().contains(m)){
 				lvMovimientos.getItems().add(m);
 				actualizaMov(m);
+				actualizaSaldos();
 			}else{
 				MessageBox.show("Error", "Los nombres de los movimientos\nno se pueden repetir");
 			}
@@ -255,6 +260,7 @@ public class TabBalanza extends Tab {
 						lvMovimientos.getItems().remove(mv);
 					}
 				}
+				actualizaSaldos();
 			}
 		}
 	}
@@ -271,7 +277,46 @@ public class TabBalanza extends Tab {
 				y = 0;
 				actualizaTes();
 				taMovimientos.setText("");
+				actualizaSaldos();
 			}
 		}
+	}
+
+	private void actualizaSaldos(){
+		double saldos[] = calculaSaldos();
+		lblDeudor.setText("Saldo Deudor\n$"+saldos[0]);
+		lblAcreedor.setText(" Saldo Acreedor\n$"+saldos[1]);
+		if(saldos[0] == saldos[1]){
+			lblBalanceado.setText("Balanceado: Si");
+		}else{
+			lblBalanceado.setText("Balanceado: No");
+		}
+	}
+	private double calculaMovDeudor(){
+		double deudor = 0.0;
+		for(T t:tes){
+			deudor += t.getMovDeudor();
+		}
+		return deudor;
+	}
+	private double calculaMovAcreedor(){
+		double acreedor = 0.0;
+		for(T t:tes){
+			acreedor += t.getMovAcreedor();
+		}
+		return 0.0;
+	}
+	//0 -> deudor, 1 -> acreedor
+	private double[] calculaSaldos(){
+		double saldos[] = {0.0,0.0};
+		for(T t: tes){
+			double s = t.getSaldo();
+			if(s > 0){
+				saldos[0] += s;
+			}else{
+				saldos[1] += -s;
+			}
+		}
+		return saldos;
 	}
 }

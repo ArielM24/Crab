@@ -5,11 +5,11 @@ import java.util.ArrayList;
 public class T extends TitledPane{
 	private Cuenta cuenta;
 	private VBox pane;
-	private ListView<String> lvAcredor, lvDeudor;
+	private ListView<String> lvAcreedor, lvDeudor;
 	private ArrayList<Operacion> operaciones;
-	private VBox vbAcredor, vbDeudor;
-	private Label lblAcredor, lblDeudor,lblSaldo;
-	private Double saldoAcredor, saldoDeudor;
+	private VBox vbAcreedor, vbDeudor;
+	private Label lblAcreedor, lblDeudor,lblSaldo;
+	private Double saldoAcreedor, saldoDeudor;
 	private int X,Y;
 	public T(Cuenta cuenta){
 		super(cuenta.getNombre(), new HBox());
@@ -18,22 +18,22 @@ public class T extends TitledPane{
 		setMaxWidth(250);
 		setMaxHeight(290);
 		saldoDeudor = 0.0;
-		saldoAcredor = 0.0;
+		saldoAcreedor = 0.0;
 		X = 0;
 		Y = 0;
 	}
 
 	private void initComp(){
 		operaciones = new ArrayList<Operacion>();
-		lvAcredor = new ListView<String>();
+		lvAcreedor = new ListView<String>();
 		lvDeudor = new ListView<String>();
 		lblDeudor = new Label("$0.0");
-		lblAcredor = new Label("$0.0");
-		lblSaldo = new Label("$0.0");
+		lblAcreedor = new Label("$0.0");
+		lblSaldo = new Label("Saldo:\n$0.00");
 		lblSaldo.setMinHeight(70);
 		vbDeudor = new VBox(10, lvDeudor,lblDeudor);
-		vbAcredor = new VBox(10,lvAcredor,lblAcredor);
-		HBox h = new HBox(10,vbDeudor ,vbAcredor);
+		vbAcreedor = new VBox(10,lvAcreedor,lblAcreedor);
+		HBox h = new HBox(10,vbDeudor ,vbAcreedor);
 		pane = new VBox(10,h,lblSaldo);
 		setContent(pane);
 	}
@@ -47,7 +47,13 @@ public class T extends TitledPane{
 	}
 
 	public double getSaldo(){
-		return saldoDeudor - saldoAcredor;
+		return saldoDeudor - saldoAcreedor;
+	}
+	public double getMovDeudor(){
+		return saldoDeudor;
+	}
+	public double getMovAcreedor(){
+		return saldoAcreedor;
 	}
 
 	public void actualiza(Operacion op){
@@ -58,17 +64,17 @@ public class T extends TitledPane{
 			lblDeudor.setText("$"+saldoDeudor);
 			lvDeudor.getItems().add(op.getId()+")$"+cantidad);
 		}else{
-			saldoAcredor += cantidad;
-			lblAcredor.setText("$"+saldoAcredor);
-			lvAcredor.getItems().add(op.getId()+")$"+cantidad);
+			saldoAcreedor += cantidad;
+			lblAcreedor.setText("$"+saldoAcreedor);
+			lvAcreedor.getItems().add(op.getId()+")$"+cantidad);
 		}
 		double saldo = getSaldo();
 		if(saldo > 0){
 			lblSaldo.setText("Saldo:\nDeudor: $"+saldo);
 		}else if(saldo < 0){
-			lblSaldo.setText("Saldo:\nAcredor: $"+ (-saldo));
+			lblSaldo.setText("Saldo:\nAcreedor: $"+ (-saldo));
 		}else{
-			lblSaldo.setText("$0.00");
+			lblSaldo.setText("Saldo:\n$0.00");
 		}
 	}
 	public void borra(Operacion op){
@@ -88,7 +94,7 @@ public class T extends TitledPane{
 	}
 
 	public boolean esVacia(){
-		return lvAcredor.getItems().isEmpty() && lvDeudor.getItems().isEmpty();
+		return lvAcreedor.getItems().isEmpty() && lvDeudor.getItems().isEmpty();
 	}
 	public Cuenta getCuenta(){
 		return cuenta;

@@ -6,27 +6,27 @@ public class Balanza implements Serializable{
 	private String nombre;
 	private ArrayList<Movimiento> movimientos;
 	private ArrayList<Cuenta> cuentas;
-	private double saldoAcredor,saldoDeudor;
+	private double saldoAcreedor,saldoDeudor;
 	public Balanza(String nombre,ArrayList<Movimiento> movimientos, ArrayList<Cuenta> cuentas){
 		this.nombre = nombre;
 		this.movimientos = new ArrayList<Movimiento>(movimientos);
 		this.cuentas = new ArrayList<Cuenta>(cuentas);
 		saldoDeudor = 0.0;
-		saldoAcredor = 0.0;
+		saldoAcreedor = 0.0;
 	}
-	public double getSaldoAcredor(){
+	public double getSaldoAcreedor(){
 		return 0.0;
 	}
 	public double getSaldoDeudor(){
 		return 0.0;
 	}
-	public void setSaldoAcredor(double s){
-		saldoAcredor = s;
+	public void setSaldoAcreedor(double s){
+		saldoAcreedor = s;
 	}
 	public void setSaldoDeudor(double s){
 		saldoDeudor = s;
 	}
 	public boolean estaBalanceada(){
-		return saldoDeudor == saldoAcredor;
+		return saldoDeudor == saldoAcreedor;
 	}
 }	
