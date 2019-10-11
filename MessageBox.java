@@ -22,7 +22,7 @@ public class MessageBox{
 		Stage stage = new Stage();
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.setTitle(title);
-		stage.setMinWidth(250);
+		stage.setMinWidth(251);
 		Label lblmsg = new Label(message);
 		Button btnOk = new Button("OK");
 		btnOk.setOnAction(e->stage.close());

@@ -1,12 +1,12 @@
-import java.util.HashMap;
+import java.io.*;
 
-public class Cuenta {
+public class Cuenta implements Serializable{
+	private Long serialVersionUID = 42L;
 	private String nombre;
 	private String descripcion;
-	private HashMap<String,Movimiento> movimientos;
 	public Cuenta(String nombre) {
 		this.nombre = nombre;
-		this.descripcion = " ifrji{rifoneqrfionq3oifn4oinfo2irnadasasasdas.\nsdnsd.";
+		this.descripcion = "Cuenta.";
 	}
 
 	public Cuenta(String nombre, String descripcion){
