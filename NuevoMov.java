@@ -6,7 +6,6 @@ import javafx.scene.layout.*;
 import javafx.geometry.*;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class NuevoMov {
 	private static Stage stage;

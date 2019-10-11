@@ -29,4 +29,7 @@ public class Balanza implements Serializable{
 	public boolean estaBalanceada(){
 		return saldoDeudor == saldoAcreedor;
 	}
+	public String getNombre(){
+		return nombre;
+	}
 }	

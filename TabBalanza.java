@@ -56,7 +56,8 @@ public class TabBalanza extends Tab {
 		lblAcreedor = new Label("Saldo Duedor\n$0.00");
 		lblDeudor = new Label(" Saldo Acreedor\n $0.00");
 		lblBalanceado = new Label("Balanceado: Si");
-		btnVerBalanza = new Button("Ver balanza de comprobación");
+		btnVerBalanza = new Button("Generar balanza de comprobación");
+		btnVerBalanza.setOnAction(e->btnVerBalanzaClick());
 		gpSaldos = new GridPane();
 		gpSaldos.add(lblDeudor,0,0);
 		gpSaldos.add(lblAcreedor,1,0);
@@ -318,5 +319,10 @@ public class TabBalanza extends Tab {
 			}
 		}
 		return saldos;
+	}
+	private void btnVerBalanzaClick(){
+		Balanza b = new Balanza("Balanza de comprobación",new ArrayList<Movimiento>(lvMovimientos.getItems()),
+			alCuentas);
+		MuestraBalanza.show(b);
 	}
 }
