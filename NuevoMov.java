@@ -20,7 +20,9 @@ public class NuevoMov {
 	private static ArrayList<CheckBox> cuentas;
 	private static ArrayList<TextField> montos;
 	private static ArrayList<RadioButton[]> tipo;
+	private static boolean editado;
 	public static Movimiento show(List<Cuenta> c){
+		editado = false;
 		stage = new Stage();
 		initComp(c);
 		scene = new Scene(spPane,570,400);
@@ -28,6 +30,9 @@ public class NuevoMov {
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.setTitle("Nuevo movimiento");
 		stage.showAndWait();
+		if(!editado){
+			m = null;
+		}
 		return m;
 	}
 
@@ -70,7 +75,10 @@ public class NuevoMov {
 		}	
 		btnAceptar = new Button("Aceptar");
 		btnCancelar = new Button("Cancelar");
-		btnCancelar.setOnAction(e->{stage.close();});
+		btnCancelar.setOnAction(e->{
+			editado = false;
+		 	stage.close();
+		});
 		btnAceptar.setOnAction(e->btnAceptarClick());
 		pane.add(new Label(" Nombre: "),4,0);
 		pane.add(tfNombre,5,0);
@@ -128,6 +136,7 @@ public class NuevoMov {
 				if(nombre.length() > 0){
 					if(s){
 						m = new Movimiento(nombre,al);
+						editado = true;
 						stage.close();
 					}
 				}else{

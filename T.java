@@ -1,10 +1,8 @@
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import java.util.ArrayList;
-import java.io.*;
 
-public class T extends TitledPane implements Serializable{
-	private Long serialVersionUID = 42L;
+public class T extends TitledPane{
 	private Cuenta cuenta;
 	private VBox pane;
 	private ListView<String> lvAcredor, lvDeudor;

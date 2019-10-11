@@ -232,10 +232,16 @@ public class TabBalanza extends Tab {
 		Cuenta c = lvCuentas.getSelectionModel().getSelectedItem();
 		if(c!=null){
 			if(ConfirmationBox.show("Borrar","¿Borrar cuenta?","Si","No")){
+				boolean vacio = false;
+				ArrayList<Movimiento> vacios = new ArrayList<Movimiento>();
 				lvCuentas.getItems().remove(c);
 				for(Movimiento m: lvMovimientos.getItems()){
 					if(m.contieneCuenta(c)){
 						m.borraC(c);
+					}
+					if(m.esVacio()){
+						vacio = true;
+						vacios.add(m);
 					}
 				}
 				x = 0;
@@ -244,6 +250,11 @@ public class TabBalanza extends Tab {
 				tes.clear();
 				alCuentas.clear();
 				actualizaTes();
+				if(vacio){
+					for(Movimiento mv: vacios){
+						lvMovimientos.getItems().remove(mv);
+					}
+				}
 			}
 		}
 	}

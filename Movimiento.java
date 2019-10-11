@@ -64,4 +64,7 @@ public class Movimiento {
 		}
 		return s;
 	}
+	public boolean esVacio(){
+		return operaciones.size() == 0;
+	}
 }
