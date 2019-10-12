@@ -150,10 +150,7 @@ public class TabBalanza extends Tab {
 	}
 
 	private void agregaCuentas() {
-		for(int i = 0; i < 20; i++){
-			Cuenta c = new Cuenta(""+i);
-			lvCuentas.getItems().add(c);
-		}
+		lvCuentas.getItems().addAll(GeneraCuentas.generaCuentas());
 		lvCuentas.getSelectionModel().selectedItemProperty().addListener((obj,oldv,newv) -> {
 			if(newv != null) {
 				taCuentas.setText(newv.getDescripcion());
@@ -216,6 +213,12 @@ public class TabBalanza extends Tab {
 			for(Movimiento m: lvMovimientos.getItems()){
 				if(m.contieneCuenta(c1)){
 					m.cambiaC(c1,c2);
+				}
+			}
+			for(Cuenta c: alCuentas){
+				if(c.equals(c1)){
+					c.setNombre(c2.getNombre());
+					c.setDescripcion(c2.getDescripcion());
 				}
 			}
 		}
@@ -333,7 +336,8 @@ public class TabBalanza extends Tab {
 			TSerializable taux = new TSerializable(t.getCuenta(),t.getMovDeudor(),t.getMovAcreedor());
 			ts.add(taux);
 		}
-		b = new Balanza("Balanza de comprobacion",ts,new ArrayList<Movimiento>(lvMovimientos.getItems()));
+		b = new Balanza("Balanza de comprobacion",ts,new ArrayList<Movimiento>(lvMovimientos.getItems())
+			,new ArrayList<Cuenta>(lvCuentas.getItems()));
 		double saldos[] = calculaSaldos();
 		b.setSaldoDeudor(saldos[0]);
 		b.setSaldoAcreedor(saldos[1]);
@@ -349,6 +353,16 @@ public class TabBalanza extends Tab {
 	public void cargaBalanza(Balanza bal){
 		lvMovimientos.getItems().clear();
 		lvMovimientos.getItems().addAll(bal.getMovimientos());
+		alCuentas.clear();
+		lvCuentas.getItems().clear();
 		actualizaTes();
+		alCuentas = new ArrayList<Cuenta>(bal.getCuentas());
+		for(Cuenta c: GeneraCuentas.generaCuentas()){
+			if(!alCuentas.contains(c)){
+				alCuentas.add(c);
+			}
+		}
+		lvCuentas.getItems().addAll(alCuentas);
+		actualizaSaldos();
 	}
 }

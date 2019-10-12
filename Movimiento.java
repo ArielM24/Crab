@@ -49,10 +49,8 @@ public class Movimiento implements Serializable{
 		for(Operacion op: operaciones){
 			if(op.getCuenta().equals(c1)){
 				op.setCuenta(c2);
-				aux.add(op);
-			}else{
-				aux.add(op);
 			}
+			aux.add(op);
 		}
 		operaciones = new ArrayList<Operacion>(aux);
 	}
