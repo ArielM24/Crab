@@ -102,6 +102,9 @@ public class Principal extends Application {
         fc.setTitle("Guardar archivo");
         File archivo = fc.showSaveDialog(stagePrincipal);
         if(archivo != null){
+            if(!archivo.getName().endsWith(".crb")){
+                archivo = new File(archivo.getName()+".crb");
+            }
             TabBalanza tb = (TabBalanza)panelBalanza.getSelectionModel().getSelectedItem();
             Balanza b = tb.getBalanza();
             try{
@@ -127,13 +130,14 @@ public class Principal extends Application {
                 tb.setText(archivo.getName());
             }catch(Exception ex){
                 ex.printStackTrace();
+                MessageBox.show("Error","Error al abrir"+archivo.getName()+"\n:(");
             }
         }
     }
 
     
     public void cerrar(Event e){
-        if(!ConfirmationBox.show("Cerrar","¿Salir?\n(El programa no detecta si se han modificado los\narchivos abiertos).","Si","No")){
+        if(!ConfirmationBox.show("Cerrar","Salir?\n(El programa no detecta si se han modificado los\narchivos abiertos).","Si","No")){
             e.consume();
         }
     }
