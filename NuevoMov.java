@@ -21,6 +21,7 @@ public class NuevoMov {
 	private static ArrayList<RadioButton[]> tipo;
 	private static boolean editado;
 	public static Movimiento show(List<Cuenta> c){
+		m = null;
 		editado = false;
 		stage = new Stage();
 		initComp(c);
@@ -33,6 +34,45 @@ public class NuevoMov {
 			m = null;
 		}
 		return m;
+	}
+
+	public static Movimiento show(List<Cuenta> c, Movimiento m1){
+		m = null;
+		editado = false;
+		stage = new Stage();
+		initComp(c);
+		tfNombre.setText(m1.getId());
+		colocaOperaciones(m1.getOperaciones());
+		scene = new Scene(spPane,750,400);
+		stage.setScene(scene);
+		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.setTitle("Nuevo movimiento");
+		stage.showAndWait();
+		if(!editado){
+			m = null;
+		}
+		return m;
+	}
+
+	private static void colocaOperaciones(List<Operacion> op){
+		int i = 0;
+		boolean tip = false;
+		double mont = 0.0;
+		for(Operacion o: op){
+			i = alCuentas.indexOf(o.getCuenta());
+			tip = o.getTipo();
+			mont = o.getCantidad();
+			montos.get(i).setText(""+mont);
+			cuentas.get(i).setSelected(true);
+			montos.get(i).setDisable(false);
+			tipo.get(i)[0].setDisable(false);
+			tipo.get(i)[1].setDisable(false);
+			if(tip){
+				tipo.get(i)[0].setSelected(true);
+			}else{
+				tipo.get(i)[1].setSelected(true);
+			}
+		}
 	}
 
 	private static void initComp(List<Cuenta> c){

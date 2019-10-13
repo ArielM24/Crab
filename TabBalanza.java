@@ -98,7 +98,7 @@ public class TabBalanza extends Tab {
 	private void agregaBtnMov(){
 		btnEditaMov = new Button("Editar");
 		btnEditaMov.setDisable(true);
-		//btnEditaMov.setOnAction(e->btnEditaMovClick());
+		btnEditaMov.setOnAction(e->btnEditaMovClick());
 		btnNuevoMov = new Button("Nuevo");
 		btnNuevoMov.setOnAction(e->btnNuevoMovClick());
 		btnBorrarMov = new Button("Borrar");
@@ -196,6 +196,23 @@ public class TabBalanza extends Tab {
 		if(x > 3){
 			x = 0;
 			y++;
+		}
+	}
+
+	private void btnEditaMovClick(){
+		Movimiento m1 = lvMovimientos.getSelectionModel().getSelectedItem();
+		Movimiento m2 = NuevoMov.show(lvCuentas.getItems(),m1);
+		if(m2!=null){
+			lvMovimientos.getItems().remove(m1);
+			tes.clear();
+			gpCuentas.getChildren().clear();
+			alCuentas.clear();
+			x = 0;
+			y = 0;
+			lvMovimientos.getItems().add(m2);
+			actualizaTes();
+			taMovimientos.setText("");
+			actualizaSaldos();
 		}
 	}
 
