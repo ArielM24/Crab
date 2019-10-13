@@ -61,7 +61,7 @@ public class MuestraBalanza{
 		for(int i = 0; i < str.length(); i++){
 			if(str.charAt(i) == 'l' || str.charAt(i) == 't' ||str.charAt(i) == 'i'||str.charAt(i) == 'f'
 				||str.charAt(i) == 'j'||str.charAt(i) == ','||str.charAt(i) == '.'||str.charAt(i) == '|'
-				||str.charAt(i) == 'r')
+				||str.charAt(i) == 'r'||str.charAt(i) == ' ')
 				s++;
 			else
 				s += 2;

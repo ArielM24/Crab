@@ -28,7 +28,7 @@ public class TabBalanza extends Tab {
 	}
 
 	private void cerrar(Event ev){
-		if(!ConfirmationBox.show("Cerrar","¿Cerrar archivo?","Si","No")){
+		if(!ConfirmationBox.show("Cerrar","Cerrar archivo?","Si","No")){
 			ev.consume();
 		}
 	}
@@ -247,7 +247,7 @@ public class TabBalanza extends Tab {
 	private void btnBorraCuentaClick(){
 		Cuenta c = lvCuentas.getSelectionModel().getSelectedItem();
 		if(c!=null){
-			if(ConfirmationBox.show("Borrar","¿Borrar cuenta?","Si","No")){
+			if(ConfirmationBox.show("Borrar","Borrar cuenta?","Si","No")){
 				boolean vacio = false;
 				ArrayList<Movimiento> vacios = new ArrayList<Movimiento>();
 				lvCuentas.getItems().remove(c);
@@ -279,7 +279,7 @@ public class TabBalanza extends Tab {
 	private void btnBorrarMovClick(){
 		Movimiento m = lvMovimientos.getSelectionModel().getSelectedItem();
 		if(m!=null){
-			if(ConfirmationBox.show("Borrar","¿Deshacer movimiento?","Si","No")){
+			if(ConfirmationBox.show("Borrar","Deshacer movimiento?","Si","No")){
 				lvMovimientos.getItems().remove(m);
 				tes.clear();
 				gpCuentas.getChildren().clear();
@@ -356,13 +356,12 @@ public class TabBalanza extends Tab {
 		alCuentas.clear();
 		lvCuentas.getItems().clear();
 		actualizaTes();
-		alCuentas = new ArrayList<Cuenta>(bal.getCuentas());
 		for(Cuenta c: GeneraCuentas.generaCuentas()){
 			if(!alCuentas.contains(c)){
 				alCuentas.add(c);
 			}
 		}
-		lvCuentas.getItems().addAll(alCuentas);
+		lvCuentas.getItems().addAll(bal.getCuentas());
 		actualizaSaldos();
 	}
 }
