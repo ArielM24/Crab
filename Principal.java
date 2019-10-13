@@ -25,7 +25,7 @@ public class Principal extends Application {
     public void start(Stage primaryStage){
     	stagePrincipal = primaryStage;
     	initComp();
-    	scenePrincipal = new Scene(panePrincipal, 1250,700);
+    	scenePrincipal = new Scene(panePrincipal, 1300,700);
     	stagePrincipal.setScene(scenePrincipal);
     	stagePrincipal.setTitle("Crab");
         stagePrincipal.setOnCloseRequest(e->cerrar(e));
