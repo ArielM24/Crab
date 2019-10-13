@@ -22,7 +22,7 @@ public class TSerializable implements Serializable{
 		return movDeudor - movAcreedor;
 	}
 	public int getLongitudDatos(){
-		int l = 40;
+		int l = 45;
 		int d = MuestraBalanza.strSize("$"+movDeudor);
 		int a = MuestraBalanza.strSize("$"+movAcreedor);
 		int c = MuestraBalanza.strSize(cuenta.getNombre());
