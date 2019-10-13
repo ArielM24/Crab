@@ -38,11 +38,14 @@ public class Balanza implements Serializable{
 	public String getNombre(){
 		return nombre;
 	}
+	public void setNombre(String nombre){
+		this.nombre = nombre;
+	}
 	public ArrayList<TSerializable> getDatos(){
 		return datos;
 	}
 	public int getLongitudDatos(){
-		int l = 30;
+		int l = 40;
 		for(TSerializable ts: datos){
 			int s = ts.getLongitudDatos();
 			if(s > l)

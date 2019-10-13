@@ -22,14 +22,16 @@ public class TSerializable implements Serializable{
 		return movDeudor - movAcreedor;
 	}
 	public int getLongitudDatos(){
-		int l = 30;
-		String d = "$"+movDeudor,a = "$"+movAcreedor,c = cuenta.getNombre();
-		if(d.length() > l)
-			l = d.length();
-		if(a.length() > l)
-			l = a.length();
-		if(c.length() > l)
-			l = c.length();
+		int l = 40;
+		int d = MuestraBalanza.strSize("$"+movDeudor);
+		int a = MuestraBalanza.strSize("$"+movAcreedor);
+		int c = MuestraBalanza.strSize(cuenta.getNombre());
+		if(d > l)
+			l = d;
+		if(a > l)
+			l = a;
+		if(c > l)
+			l = c;
 		return l;
 	}
 	public Cuenta getCuenta(){

@@ -299,8 +299,10 @@ public class TabBalanza extends Tab {
 		lblAcreedor.setText(" Saldo Acreedor\n$"+saldos[1]);
 		if(saldos[0] == saldos[1]){
 			lblBalanceado.setText("Balanceado: Si");
+			lblBalanceado.setStyle("-fx-background-color:#19FF00");
 		}else{
 			lblBalanceado.setText("Balanceado: No");
+			lblBalanceado.setStyle("-fx-background-color:#FF0300");
 		}
 	}
 	private double calculaMovDeudor(){
@@ -336,7 +338,7 @@ public class TabBalanza extends Tab {
 			TSerializable taux = new TSerializable(t.getCuenta(),t.getMovDeudor(),t.getMovAcreedor());
 			ts.add(taux);
 		}
-		b = new Balanza("Balanza de comprobacion",ts,new ArrayList<Movimiento>(lvMovimientos.getItems())
+		b = new Balanza(getText(),ts,new ArrayList<Movimiento>(lvMovimientos.getItems())
 			,new ArrayList<Cuenta>(lvCuentas.getItems()));
 		double saldos[] = calculaSaldos();
 		b.setSaldoDeudor(saldos[0]);

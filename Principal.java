@@ -107,10 +107,12 @@ public class Principal extends Application {
             }
             TabBalanza tb = (TabBalanza)panelBalanza.getSelectionModel().getSelectedItem();
             Balanza b = tb.getBalanza();
+            b.setNombre(archivo.getName().split("\\.crb")[0]);
+            tb.setText(archivo.getName().split("\\.crb")[0]);
             try{
                 ObjectOutputStream os = new ObjectOutputStream(new FileOutputStream(archivo));
                 os.writeObject(b);
-                tb.setText(archivo.getName());
+                tb.setText(archivo.getName().split("\\.crb")[0]);
             }catch(Exception ex){
                 ex.printStackTrace();
             }
@@ -127,10 +129,10 @@ public class Principal extends Application {
                 miNuevoClick();
                 TabBalanza tb = (TabBalanza)panelBalanza.getSelectionModel().getSelectedItem();
                 tb.cargaBalanza(b);
-                tb.setText(archivo.getName());
+                tb.setText(b.getNombre());
             }catch(Exception ex){
                 ex.printStackTrace();
-                MessageBox.show("Error","Error al abrir"+archivo.getName()+"\n:(");
+                MessageBox.show("Error","Error al abrir "+archivo.getName()+"\n:(");
             }
         }
     }

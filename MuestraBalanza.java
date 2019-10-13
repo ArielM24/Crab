@@ -19,7 +19,7 @@ public class MuestraBalanza{
 	public static void show(Balanza b){
 		stage = new Stage();
 		initComp(b);
-		scene = new Scene(spPane,800,600);
+		scene = new Scene(spPane,1000,600);
 		stage.setScene(scene);
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.setTitle(b.getNombre());
@@ -28,8 +28,7 @@ public class MuestraBalanza{
 	private static void initComp(Balanza b){
 		balanza = b;
 		ta = new TextArea();
-		ta.setEditable(false);
-		ta.setMinWidth(700);
+		ta.setMinWidth(900);
 		ta.setMinHeight(500);
 		btnImprimir = new Button("Imprimir/exportar PDF");
 		btnImprimir.setTooltip(new Tooltip("Puede no funcionar en linux"));
@@ -56,7 +55,7 @@ public class MuestraBalanza{
 		}
 		return s;
 	}
-	private static int strSize(String str){
+	public static int strSize(String str){
 		int s = 0;
 		for(int i = 0; i < str.length(); i++){
 			if(str.charAt(i) == 'l' || str.charAt(i) == 't' ||str.charAt(i) == 'i'||str.charAt(i) == 'f'
@@ -69,7 +68,7 @@ public class MuestraBalanza{
 		return s;
 	}
 	private static String generaTexto(){
-		String data = "\t\t\t"+balanza.getNombre()+"\n";
+		String data = "\t\t\tBalanza de comprobacion "+balanza.getNombre()+"\n";
 		int l = balanza.getLongitudDatos();
 		data += "Cuentas"+espacios(l - strSize("Cuentas"));
 		data += "Movimientos"+espacios(l*2 - strSize("Movimientos"));

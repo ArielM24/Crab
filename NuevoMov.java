@@ -24,7 +24,7 @@ public class NuevoMov {
 		editado = false;
 		stage = new Stage();
 		initComp(c);
-		scene = new Scene(spPane,570,400);
+		scene = new Scene(spPane,750,400);
 		stage.setScene(scene);
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.setTitle("Nuevo movimiento");
